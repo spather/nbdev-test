@@ -2,22 +2,37 @@ name: CI
 on:  [workflow_dispatch, pull_request, push]
 
 jobs:
+  # Test the upstream version of nbdev-ci as baseline
   test-upstream:
     runs-on: ubuntu-latest
     steps: [uses: fastai/workflows/nbdev-ci@master]
 
-  test-fork-master-not-specified:
+  # Test the master branch of my fork
+  # (should be the same as upstream)
+  test-fork-master:
     runs-on: ubuntu-latest
     steps: [uses: spather/fastai-workflows/nbdev-ci@master]
 
-  test-fork-master-explicit-false:
+  # Test the skip-checkout branch of my fork
+  # without specifying a value for skip_checkout
+  # flag. Should be the same as setting it to 'false'.
+  test-fork-branch-option-not-specified:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: spather/fastai-workflows/nbdev-ci@skip-checkout
+
+  # Test the skip-checkout branch of my fork
+  # with value set explicitly to 'false'
+  test-fork-branch-explicit-false:
     runs-on: ubuntu-latest
     steps:
     - uses: spather/fastai-workflows/nbdev-ci@skip-checkout
       with:
         skip_checkout: 'false'
 
-  test-fork-master-explicit-true:
+  # Test the skip-checkout branch of my fork
+  # with value set explicitly to 'true'
+  test-fork-branch-explicit-true:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3 # Needed to because skip_checkout is true below
