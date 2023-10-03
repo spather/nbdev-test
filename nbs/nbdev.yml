@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "nbdev-test"
+  site-url: "https://spather.github.io/nbdev-test"
+  description: "A dummy nbdev project that I use to test things"
+  repo-branch: main
+  repo-url: "https://github.com/spather/nbdev-test"
