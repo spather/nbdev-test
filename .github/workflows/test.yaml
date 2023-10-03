@@ -2,6 +2,25 @@ name: CI
 on:  [workflow_dispatch, pull_request, push]
 
 jobs:
-  test:
+  test-upstream:
     runs-on: ubuntu-latest
     steps: [uses: fastai/workflows/nbdev-ci@master]
+
+  test-fork-master-not-specified:
+    runs-on: ubuntu-latest
+    steps: [uses: spather/fastai-workflows/nbdev-ci@master]
+
+  test-fork-master-explicit-false:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: spather/fastai-workflows/nbdev-ci@skip-checkout
+      with:
+        skip_checkout: false
+
+  test-fork-master-explicit-true:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3 # Needed to because skip_checkout is true below
+    - uses: spather/fastai-workflows/nbdev-ci@skip-checkout
+      with:
+        skip_checkout: true
